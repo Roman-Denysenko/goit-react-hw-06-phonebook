@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import actions from '../../redux/actions';
 
@@ -8,7 +9,7 @@ const Filter =({value,onFilter })=> {
    
     return (
       <>
-        <label className={s.lable}>
+        <label className={s.label}>
           Find contact by name
           <input
             className={s.input}
@@ -20,7 +21,12 @@ const Filter =({value,onFilter })=> {
         </label>
       </>
     );
-  }
+}
+  
+Filter.propTypes = {
+  value: PropTypes.string,
+  onFilter: PropTypes.func,
+};
 
 
 const mapStateToProps = state => ({

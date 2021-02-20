@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { CSSTransition } from 'react-transition-group';
 import Warning from '../warning';
 import { connect } from 'react-redux';
+import actions from '../../redux/actions';
 
 
 import s from './ContactForm.module.css';
 
 class ContactForm extends Component {
-  static propTypes = {};
+  static propTypes = {
+    contacts: PropTypes.object,
+    onAdd: PropTypes.func,
+  };
 
   static defaultProps = {};
 
@@ -45,7 +50,7 @@ class ContactForm extends Component {
         warning:false,
       });
     }
-    this.props.onSubmitForm( contactItem);
+    this.props.onAdd(contactItem)
     this.resetInput();
   };
 
@@ -101,7 +106,11 @@ class ContactForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  contacts: state,
+  contacts: state.contacts,
 });
 
-export default connect(mapStateToProps)(ContactForm)  ;
+const mapDispatchToProps = dispatch => ({
+   onAdd: item => dispatch(actions.addContact(item)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)  ;
